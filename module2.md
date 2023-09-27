@@ -1,4 +1,4 @@
-# Embeddings, Vector Databases & Search
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/82fe632c-2fcd-4d26-8e2e-7ac07c78c148)# Embeddings, Vector Databases & Search
 ## Passing context to LMs helps factual recall
 Let's first understand why do we even pass context to these language models? As I mentioned, fine-tuning is another way for models to learn knowledge. It is also usually better suited for when you have specialized tasks. So imagine that now you are studying for an exam two weeks away, you might forget about the nitty-gritty details but you probably would have internalized the details a bit better. On the other hand, passing contacts to the model is like when you take an example open notes. 
 
@@ -112,3 +112,151 @@ The answer is to introduce hierarchy. So let's look at the top right image. We b
 Now we just went through the vector search strategy. And I want to emphasize that the ability to search for similar vectors is actually not a small feat because it opens up the possibility of our use cases by a ton. We are no longer limited to writing code that is constrained by exact matching rules. In fact, when we write exact matches, we are using filter statements and, as we all know, SQL filter statements are often not very flexible. So that's what we're going to cover next: how do these vector databases or vector storage solutions actually implement filtering?
 
 # Filtering
+Adding filtering function in vector databases is actually quite hard. And different vector databases also implement this differently as well. There are largely three categories of filtering strategies: you can either do filtering post-query, in-query, or pre-query. But there are also vector databases, which implement their own proprietary filtering algorithms, grounded in one of these as well. So take the example of this query, I can start out by searching for only shoes, which gives me the broader selection choices possible. And then I can make my queries more and more precise by adding adjectives like "black", "black shoes" in the query. But maybe I finally decide I want to buy only Nike shoes. So we can view this brand "Nike" as a brand-specific callout in the metadata. And in fact, for many online retail websites,
+we can indeed filter by this metadata, for example, by brands, by styles, by price and etc. 
+
+So a question for you is, would you implement the brand filter prior to the query? What if you don't actually have any Nike shoes in your store? Should you then return no shoes in your results? Let's go through the nuances of each filtering type in the following slides.
+
+## Post-query Filtering
+The first is post-query filtering.
+Say that now you are trying to find the best Pixar movie that's similar to Frozen. After we identify the top-K nearest neighbors ordered results, we can then apply the Pixar Studio filter. 
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/088300d7-92ad-494e-88d7-fe4c74bac8f0)
+
+The upside here is that we get to leverage the speed of ANN but the downside is that the number of results is highly unpredictable and maybe there's no such movie that meets your requirements.
+
+## In-query Filtering
+The second type of filtering is in-query. This is quite interesting because the algorithm does both ANN and filtering at the same time. 
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/f9acb986-4b5c-466e-9758-d10654b165b2)
+
+For instance, when you search the movie again that is similar to Frozen but produced by Pixar, all the movie data will have to be converted into vectors. But in the meantime, the studio information is also stored in the system as a scalar field.
+
+So during search, both vector similarity and metadata information will need to be computed. This can put a rather high demand on the system memory because it needs to load both the vector data and the scalar data for filtering and vector search. So perhaps when you shop online and when you have used a lot of filters at once, you might realize that when you add more filters, the website sometimes may take more time to return you the results. 
+So if the memory of the system is limited, as you increase the number of filters, you might actually hit out-of-memory issues, abbreviated as OOM, in this slide. But this approach is actually quite suitable for **row-based data** because, in a row storage format, you need to read in all columns in a row at once; as opposed to for columnar storage format that allows you to read in subsets of columns of data at a time.
+
+## Pre-query Filtering
+The last type is pre-query filtering. This limits similarity search within a certain scope. What vectors can I actually even consider, you know, after I apply the filter? The downside of this approach is that it doesn't leverage the speed of ANN and all data will have to be filtered in a brute-force manner. 
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/d1073edb-7371-428c-814d-ebaafc32f7af)
+
+So this is often not as performant as the post-query method or the in-query filtering method because the other two methods could easily leverage the speed of ANN.
+
+# Vector Stores
+We are now on to the more practical aspect of how we interface with these vectors. The answer is using **vector stores**. Loosely speaking, when I talk about vector store, it can include vector databases, vector libraries, and also plugins on top of their existing regular databases.
+But why do I care about vector stores? Why can't I just use a regular database to store vectors?
+
+## Why are vector database (VDBs) so hot?
+Vector stores aren't actually too different from regular databases. Specifically, a vector database is actually just like a regular database. It inherits full-fledged database properties like CRUD, which stands for Create-Read-Update- and Delete. But a **vector database is specialized to store unstructured data as vectors** and in fact, the differentiating capability of vector stores is providing search as a service. 
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/b2492932-01d3-4f42-a59e-6d70ced5ff1e)
+
+You don't have to implement your own search algorithm. Vector stores provide search functionality for you out of the box. 
+
+## What about vector libraries or plugins? 
+Let's talk about libraries first. So vector libraries do create vector indexes for you and as we mentioned a few segments ago, a vector index is a data structure that helps you to conduct efficient vector search.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/6522893b-be63-4232-ba07-89a3148bd087)
+
+So if you don't want to integrate with a new database system, it's actually completely fine to use a vector library that creates this vector index for you. Typically a vector index can contain three different components: 
+- the first is an optional pre-processing step that users typically implement on their own, where you may want to normalize your embeddings or reduce the embedding dimensions. The primary step is where an indexing algorithm is actually involved; for example, we talk about **FAISS** and we talk about **HNSW**
+- And the last optional post-processing step is where you may actually want to further quantize or hash your vectors to optimize for search speed.
+
+So a vector library like FAISS is often sufficient for small and static data but all vector libraries do not have database properties, so it means that you wouldn't come to expect a vector library to have vector database properties, like the CRUD support, data replication or being able to store the data on disk, or you'll probably just have to wait for the full import to complete before you can query. And it means that it also means that every single time you make changes to the data, the vector index will have to completely rebuild from scratch. 
+
+So whether or not you use a vector database or a vector library really comes down to how often does your data change and whether you need the full-fledged database properties that comes with a vector database or no. 
+
+On the other hand, there are also existing relational databases or search systems that provide you Vector search plugins they typically have fewer metrics or ANN choices but I won't be surprised if you will see a lot more vector search support for these plugins, even in the coming months. 
+
+## Do I need a Vector Database?
+So now, let's talk a little bit more about vector databases or not.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/8649733a-7054-4ad6-83f6-f065d141566c)
+
+So let's start by remembering that whether or not you use a vector database, it doesn't affect the speed of your ANN under the hood. The decision comes down to three main things:
+- do you have that much data? Typically, we'll only see the need for having a vector database when you have millions or billions of records and how fast do you actually need the query time to be your serving time your latency.
+- And lastly, as I mentioned earlier, do you actually need the full fledged database properties? So if your data is mostly static and you don't expect to update your data all that much, then not using a vector
+database is often a fine start in that case. You can often just start by using a vector library, but if your data changes quickly, it can be much cheaper to offline complete compute the embeddings first and then store them in a vector database for on-demand query later. This way you can also avoid using an online model to dynamically compute the embeddings and, of course, unsurprisingly, the cons for adding a vector database to your architecture means that you are going to pay for an additional service and you do have one more system to learn, integrate and maintain.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/200c75a9-feb3-4570-9dfc-107e3ce41162)
+
+If you are interested in exploring vector databases, I've provided above some starter comparisons across the popular choices and note that the information here may evolve over time.
+
+# Best Practices
+## Do I always need a Vector Store?
+In the context of LLMs, whether or not you need a vector store, you know, whether it is a vector database or a library or a plugin on top of your relational database, it all comes down to do you need context augmentation. Vector stores extend LLMs with knowledge and it can provide relevant vector lookup and therefore extend the context. So this can be really helpful to help with factual recall, as we mentioned. And it can also help with the concept called **hallucination** which is an LLM problem that we'll dive into in Module 5. But generally speaking, there are use cases that probably do not need context augmentation to help with factual recall. For example, summarization, your text classification use cases including sentiment analysis, and translation. For these use cases, you probably should feel safe enough to not use vector stores.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/aefa3d8a-0757-47b1-8a6e-a76ab99950ac)
+
+- Vector stores extend LLMs with knowledge
+  - The returned relevant documents become the LLM context
+  - Context can reduce hallucination (Module 5!)
+- Which use cases do not need context augmentation?
+  - Summarization
+  - Text classification
+  - Translation
+
+## How to improve retrieval performance?
+How do you improve retrieval performance then, to allow users to get better responses?
+At a very high level, there are two different strategies. One is regarding your embedding model selection and the second has to do with how you store your documents. Let's start with embeddings.
+Tip one: you should absolutely choose your embedding model wisely. A proxy question that you can ask yourself is: is your embedding model currently trained on similar data as yours? If the answer is yes, then good news, you can keep using the embedding model.
+
+- Embedding model selection
+  - Do I have the right embedding model for my data?
+  - Do my embeddings capture BOTH my documents and queries?
+- Document storage strategy
+  - Should I store the whole document as one? Or split it up into chunks?
+ 
+### Tip 1: Choose your embedding model wisely
+A proxy question that you can ask yourself is: is your embedding model currently trained on similar data as yours? If the answer is yes, then good news, you can keep using the embedding model.
+But if the answer is no, then you have two options over here. First is to look into using another pre-trained embedding model. Or the second is to either train your own embeddings or fine-tune your embeddings based on your data. 
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/439e4d4d-4a53-4573-bbb9-4ecde17b76ca)
+
+The latter approach over here has been around in the field of NLP for years. It is a very established approach and we used to talk about fine-tuning BERTembeddings all the time before the hype of ChatGPT or chatbots surfaced.
+
+### Tip 2: Ensure embedding space is the same for both queries and documents
+Make sure that your embedding space actually captures all of your data, including your user queries as well. For example, if your data is about movies and you ask something about medicine then the search retriever system would definitely have a bad performance.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/b93b9b3d-544b-484f-8e79-ccf8ee6f8a99)
+
+So just always make sure the documents in your vector database actually contain relevant information to your queries. Similarly, use similar models to index your documents and your queries if you want them to have the same embedding space. And the same embedding space is really important if you want relevant results to be returned.
+
+## Chunking Strategy: Should I split my docs?
+Now, onto document storage strategy. I'm going to preface all of this with a caveat that how to best store your documents is still not very well defined but I'll share some points for your consideration when it comes to document storage. 
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/c6a71eb4-9992-4543-9fda-dff9b56a4f55)
+
+We have two choices:
+- one is either to store a document as a whole document or we can store a single document by chunks. It means that we are splitting a document up into multiple chunks so each chunk could be a paragraph, could be a section or could just be anything that you arbitrarily define. It means that one document can produce many vectors and your chunking strategy may determine how relevant is the chunks returned to the query
+itself but you also need to think about how much context or chunks can you actually fit in within the model's token limit? Do you need to pass this output to the next LLM?
+
+So passing outputs to another LLM is something that we haven't touched upon in this module, but we'll talk about it in Module 3. As an example, if you were to have four documents with two thousand tokens in total, it could be that each chunk has roughly 500 tokens. That will be to split the document even evenly.
+
+### Chunking strategy is use-case specific
+But know that chunking strategy is highly use-case specific. In machine learning, we talk about how developing a model is usually an iterative process and you should absolutely also treat chunking strategy as in the same way as well. Experiment with different sizes and different approaches.
+How long is your document? Is your document with single sentence or many many sentences? If a chunk is only one sentence, then your embeddings will only focus on specific meaning for that particular sentence. But if your chunk actually captures multiple paragraphs, then your embeddings would capture broader themes of your text.
+
+You can split by headers; you can split by sections; you can split by paragraphs.
+But you should also consider the user behaviors as well. Can you anticipate how long the user queries will be? If you have longer queries, then there is a higher chance for the query embeddings to be aligned better with the chunks that are returned. But if you have shorter queries, then they tend to be more precise and maybe having a shorter chunk would actually make sense.
+
+# Chunking best practices are not yet well-defined
+It’s still a very new field!
+Existing resources:
+- [Text Splitters](https://python.langchain.com/en/latest/modules/indexes/text_splitters.html) by LangChain
+- [Blog post on semantic search by Vespa](https://blog.vespa.ai/semantic-search-with-multi-vector-indexing/) - light mention of chunking
+- [Chunking Strategies by Pinecone](https://www.pinecone.io/learn/chunking-strategies/)
+
+Now say that I choose the wrong embedding model and my chunking strategy was not good, can we actually add some guard rails to prevent silent failures or undesired performance?
+So for users, it will be helpful for you to actually include explicit instructions in the prompts. As we discussed in Module 1, where you can tell the model not to make things up if it doesn't know the answer. So this can help you to actually know where the model limitation is rather than relying on unreliable outputs.
+
+But for software engineers, there are a few things that you can consider
+- First is to maybe add a failover logic.
+  - If the distance-X exceeds threshold, then maybe you have to show a generic list of responses, rather showing nothing. So going back to the Nike example, if there are no Nike shoes, return then probably you can show a generic list of the most popular shoes that users can buy.
+- In terms of toxicity or discrimination or exclusion, you can also add a basic toxicity classification model on top.
+  - Prevent users from actually submitting offensive inputs.
+  - Discard offensive content to avoid training or saving to VDB.
+ 
+In 2016, there is this chatbot released by Microsoft called Tay that actually became a really racist chatbot because users start submitting racist remarks. So by having some guardrail model on top will help prevent a chatbot from functioning differently as you expect.
+
+And you can also choose to discard all the offensive content to avoid retraining or fine-tuning on this offensive content. And lastly, you should also can think about consider configuring your vector database to actually timeout if a query takes too long to return a response. Maybe this indicates that there are actually no similar vectors found.
