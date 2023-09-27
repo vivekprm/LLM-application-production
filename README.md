@@ -188,3 +188,139 @@ A good example of this might be, say, I have a news browser, and given news arti
 Now I don't want to retrain a new model every time I change my categories. I want to use an existing model. And LLMs actually let you do this.
 
 **Unlike classical machine learning, an LLM sort of already knows the language, and so when you add or change labels, it already knows what those labels mean. So it can potentially do that classification without being retrained**.
+
+At the bottom-left, you can see how a pipeline would do this. Given the article and candidate labels, it'll return you its prediction. Really useful task.
+
+## Few-shot Learning
+The next one, few-shot learning, is very general and I'd almost call it a technique rather than a task.
+In this example, you show the model what you want through examples, so **instead of fine-tuning a model for a specific task, we provide a few examples of doing that tas**k.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/8008cc59-a879-491b-8979-307620441219)
+
+An LLM which is powerful enough can often sort of learn on the fly what you want to do. So on the right, you can see we're doing sentiment analysis, but using a model which is not designed for sentiment analysis.
+
+Our instruction is: for each tweet, determine the sentiment. We give some examples: here's a tweet, here's a sentiment, a couple more. And then a query which is a new tweet, give me the sentiment.
+
+This is a technique which you'd use when there is no fine-tuned model available for your task and you don't have enough labeled training data to train or fine-tune one, but you can write out a few examples.
+This uses text generation models which must be quite general to understand and follow these instructions, but it's a really powerful technique.
+
+We're starting to see here where the user input, which might be that query at the very bottom, is being crafted into a larger prompt.
+
+# Prompts
+Let's talk about prompts, which are our entry to interacting with powerful LLMs.
+
+Prompts often appear in the context of what are called instruction-following LLMs.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/d59dc299-98a8-4a2b-9760-52409387f880)
+
+To explain what these are, let's compare them with foundation models on the left. Foundation models are pre-trained on these very general text generation tasks, like given the text in blue, predict the next token in the sequence, and the next, and the next. Or fill in missing tokens in a sequence.
+
+Instruction-following models on the other hand are tuned to follow almost arbitrary instructions or prompts. This is still very general but somehow a bit more specific.
+
+Some examples might be: 
+give me three ideas for cookie flavors; the LLM returns a numbered list.
+
+Write a short story about some stuff; and it returns a short story.
+
+Now, these are toy examples of course, but prompt engineering actually gets pretty serious, and we've seen some examples already.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/5ca5636c-fa8b-4a11-9992-222dcf1ae57f)
+
+In general, prompts can be thought of as inputs or queries to LLMs to elicit responses---emphasis on elicit because you really are trying to tease out the right behavior from these otherwise black-box models.
+
+We saw an example with our summarization problem. The T5 model expects a prefix summarize colon appended to that article, and we saw this in the code. That's all it expects, but it's enough to tell the model what you want it to do.
+
+Now more generally, these prompts can be natural language sentences or questions, code, combinations of the above, emojis, pretty much any text.
+They can also include outputs from other LLM queries. That's very powerful because it allows nesting or chaining LLMs, making these complex and dynamic interactions.
+
+We saw a more complicated example with few-shot learning where a prompt had an instruction, a number of examples to sort of teach the LLM what we wanted, and then the actual query.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/a5e67044-ecd7-4e86-9a27-97b3a2eac5e5)
+
+It gets even more so. LangChain generated this structured output extraction example for me, where it has a number of parts. At the top a very high-level instruction: answer the user query; it should fit this
+format. An explanation and example of how to understand the desired output format, specification of that output schema, and then the final instruction: tell me a joke.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/9c9d8b4d-ad10-4073-a5c7-b924fc9d43f8)
+
+Now this prompt is not a joke even though it looks ridiculous. This actually works with some models, and it outputs a structured format which can then be fed into downstream data pipelines.
+This is just a nice example of how powerful these prompts and prompt engineering can be.
+
+# Prompt Engineering
+Let's talk about prompt engineering. We're going to have a lot of general tips, but we're going to start off with a caveat that **prompt engineering is model-specific**.
+
+So prompts will guide a model to complete the task in the way you wanted, but different models may require different prompts. And a lot of guidelines you'll see out there are specific to one of the most popular services, **ChatGPT and its underlying OpenAI models**. They may not work for non-ChatGPT models, but a lot of the techniques do carry over, even if the specific texts of the prompts do not.
+
+Different use cases may require different prompts, and so iterative development is key, hence engineering.
+
+## General Tips
+Let's start with some general tips around how a good prompt needs to be clear and specific. Just like when you ask a human to do something you need to be clear and specific, that helps with LLMs as well.
+
+A good prompt often consists of an:
+- instruction,
+- some context or background information,
+- an input or question,
+- output type or format.
+
+You should describe the high level task with clear commands. That may mean:
+- Use specific keywords like Classify, Translate, so on,
+- Or including detailed instructions.
+
+And finally, this is engineering, so test different variations of the prompt across different samples. Use a data-driven approach here: what prompt does better on average for your set of inputs?
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/3641c7c2-e883-4400-8506-e4c801c708e8)
+
+Just a refresher: we saw this example in the last video of LangChain giving a prompt with different components: a very clear instruction, context or an example, specification of the output format, and
+then the actual user query input: tell me a joke.
+
+## How to help the model to reach better answer
+There are also techniques for helping the model to reach a better answer, to sort of think better.
+- First, you can ask the model not to make things up. You've probably heard of the term hallucination, where models will sometimes just spout nonsense or false things. But you can tell the model not to, and that can help.
+- You can also ask the model not to assume or probe for sensitive information, and finally this last one is very powerful.
+- Ask the model not to rush to a solution, but instead take more time to think using what's called chain of thought reasoning. Things like: explain how you would solve this problem, or do this step-by-step. That often leads to better results.
+
+Prompt formatting can also be important.
+
+## Prompt Formatting Tips
+Use delimiters to distinguish between the instruction and the context. Also use them to distinguish between the user input, if this is a user-facing application, and the prompt that you add around it.
+Ask the model to return structured output, and provide a correct example.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/b78df92d-7635-4ac9-bcd1-45cd8cb5eee3)
+
+On the right you can see where a user-facing application allows users to input part of a prompt but then we wrap it with a larger prompt. And in this example if you can read it, the user is trying to override our
+instruction. This is called **prompt injection**, and prompt formatting can help avoid this.
+
+This starts to get into the idea of hacking prompts, which is exploiting LLM vulnerabilities by manipulating inputs. But good prompts can help reduce this.
+
+## Good prompts reduce successful hacking attempts
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/9c5cce56-46a3-4f5e-b59a-c84d721e4b08)
+
+On the upper-left, here's prompt injection which we just saw, where you're basically trying to get the LLM to ignore the real instruction which the application wants it to follow, and instead override it with a user input instruction.
+In the bottom-left is prompt leaking, where we're extracting sensitive information from a model. Here is a public example of extracting the secret code name of Microsoft Bing Search. On the right is an example of jailbreaking, where you're bipassing a moderation rule.
+
+Here it's asking how to do something illegal, and the model first says, I can't tell you. And then some rephrasing, and the model actually answers the user question. This, like any computer security thing, is sort of a constant battle between the people developing these applications and the people trying to break them. And so this example on the right actually doesn't work anymore because it has been fixed. This is something you might need to think about in your applications as well.
+
+## How else to reduce prompt hacking
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/da95c735-43b0-44b8-8cbc-61c9aa36af25)
+
+There are other techniques for reducing prompt hacking.
+-  You can post-process or filter.
+  - Use another model to clean the output, or tell the model to remove all offensive words from the output.
+- You can repeat instructions or sandwich instructions at the end. This can help llm pay attention to whatyou really wanted to do.
+- You can enclose user input with random strings or tags. That makes it easier for the model to distinguish what the user input is versus your instructions.
+- And if all else fails, it can help to select a different model or restrict prompt length.
+
+# Resources
+Here are some guides and tools to help with writing prompts. Some are OpenAI-specific, and some are not, but these will be great resources as you dive into the lab.
+[Best practices for OpenAI-specific models](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api), e.g., GPT-3 and Codex
+[Prompt engineering guide](https://www.promptingguide.ai/) by DAIR.AI
+[ChatGPT Prompt Engineering Course](https://learn.deeplearning.ai/chatgpt-prompt-eng) by OpenAI and DeepLearning.AI
+[Intro to Prompt Engineering Course](https://learnprompting.org/docs/intro) by Learn Prompting
+[Tips for Working with LLMs](https://github.com/brexhq/prompt-engineering) by Brex
+
+Tools to help generate starter prompts:
+• [AI Prompt Generator](https://coefficient.io/ai-prompt-generator) by coefficient.io
+• [PromptExtend](https://www.promptextend.com/)
+• [PromptParrot](https://replicate.com/kyrick/prompt-parrot) by Replicate
+
