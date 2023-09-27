@@ -256,7 +256,15 @@ But for software engineers, there are a few things that you can consider
 - In terms of toxicity or discrimination or exclusion, you can also add a basic toxicity classification model on top.
   - Prevent users from actually submitting offensive inputs.
   - Discard offensive content to avoid training or saving to VDB.
- 
+
 In 2016, there is this chatbot released by Microsoft called Tay that actually became a really racist chatbot because users start submitting racist remarks. So by having some guardrail model on top will help prevent a chatbot from functioning differently as you expect.
 
 And you can also choose to discard all the offensive content to avoid retraining or fine-tuning on this offensive content. And lastly, you should also can think about consider configuring your vector database to actually timeout if a query takes too long to return a response. Maybe this indicates that there are actually no similar vectors found.
+
+# Module Summary
+- Vector stores are useful when you need context augmentation.
+- Vector search is all about calculating vector similarities or distances.
+- A vector database is a regular database with out-of-the-box search capabilities.
+- Vector databases are useful if you need database properties, have big data, and need low latency.
+- Select the right embedding model for your data.
+- Iterate upon document splitting/chunking strategy
