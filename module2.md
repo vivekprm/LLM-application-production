@@ -1,4 +1,7 @@
-![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/82fe632c-2fcd-4d26-8e2e-7ac07c78c148)# Embeddings, Vector Databases & Search
+# Embeddings, Vector Databases & Search
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/82fe632c-2fcd-4d26-8e2e-7ac07c78c148)
+
 ## Passing context to LMs helps factual recall
 Let's first understand why do we even pass context to these language models? As I mentioned, fine-tuning is another way for models to learn knowledge. It is also usually better suited for when you have specialized tasks. So imagine that now you are studying for an exam two weeks away, you might forget about the nitty-gritty details but you probably would have internalized the details a bit better. On the other hand, passing contacts to the model is like when you take an example open notes. 
 
