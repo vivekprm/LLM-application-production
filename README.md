@@ -324,3 +324,42 @@ Tools to help generate starter prompts:
 • [PromptExtend](https://www.promptextend.com/)
 • [PromptParrot](https://replicate.com/kyrick/prompt-parrot) by Replicate
 
+# Module Summary
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/ce16f0f2-1469-4039-a9a8-e88c26a88f23)
+
+## Module 1 Resources
+- NLP tasks
+  - [Hugging Face tasks page](https://huggingface.co/tasks)
+  - [Hugging Face NLP course chapter 7: Main NLP Tasks](https://huggingface.co/course/chapter7/1?fw=pt)
+  - Background reading on specific tasks
+    - Summarization: [Hugging Face summarization task page](https://huggingface.co/tasks/summarization) and [course section](https://huggingface.co/learn/nlp-course/chapter7/5)
+    - Sentiment Analysis: [Blog on “Getting Started with Sentiment Analysis using Python”](https://huggingface.co/blog/sentiment-analysis-python)
+    - Translation: [Hugging Face translation task page](https://huggingface.co/docs/transformers/tasks/translation) and [course section](https://huggingface.co/learn/nlp-course/chapter7/4)
+    - Zero-shot classification: [Hugging Face zero-shot classification task page](https://huggingface.co/tasks/zero-shot-classification)
+    - Few-shot learning: [Blog on “Few-shot learning in practice: GPT-Neo and the 🤗 Accelerated Inference API”](https://huggingface.co/blog/few-shot-learning-gpt-neo-and-inference-api)
+
+- [Hugging Face Hub](https://huggingface.co/docs/hub/index)
+  - [Models](https://huggingface.co/models)
+  - [Datasets](https://huggingface.co/datasets)
+  - [Spaces](https://huggingface.co/spaces)
+
+- Hugging Face libraries
+  - [Transformers](https://huggingface.co/docs/transformers/index)
+    - Blog post on inference configuration: [How to generate text: using different decoding methods for language generation with Transformers](https://huggingface.co/blog/how-to-generate)
+    - [Datasets](https://huggingface.co/docs/datasets)
+    - [Evaluate](https://huggingface.co/docs/evaluate/index)
+
+- Models
+  - Base model versions of models used in the demo notebook
+    - [T5](https://huggingface.co/docs/transformers/model_doc/t5)
+    - [BERT](https://huggingface.co/docs/transformers/model_doc/bert)
+    - [Marian NMT framework](https://huggingface.co/docs/transformers/model_doc/marian) (with 1440 language translation models!)
+    - [DeBERTa](https://huggingface.co/docs/transformers/model_doc/deberta) (Also see [DeBERTa-v2](https://huggingface.co/docs/transformers/model_doc/deberta-v2))
+    - [GPT-Neo](https://huggingface.co/docs/transformers/model_doc/gpt_neo) (Also see [GPT-NeoX](https://huggingface.co/docs/transformers/model_doc/gpt_neox))
+  - [Table of LLMs](https://crfm.stanford.edu/ecosystem-graphs/index.html)
+
+- Prompt engineering
+  - [Best practices for OpenAI-specific models](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api)
+  - [DAIR.AI guide](https://www.promptingguide.ai/)
+  - [ChatGPT Prompt Engineering Course](https://learn.deeplearning.ai/chatgpt-prompt-eng) by OpenAI and DeepLearning.AI
+  - [🧠 Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts) for fun examples with ChatGPT
