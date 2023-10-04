@@ -271,3 +271,40 @@ And you can also choose to discard all the offensive content to avoid retraining
 - Vector databases are useful if you need database properties, have big data, and need low latency.
 - Select the right embedding model for your data.
 - Iterate upon document splitting/chunking strategy
+
+# Module 2 - Resources
+Research papers on increasing context length limitation
+- [Pope et al 2022](https://arxiv.org/abs/2211.05102)
+- [Fu et al 2023](https://arxiv.org/abs/2212.14052)
+
+Industry examples on using vector databases
+- FarFetch
+  - [FarFetch: Powering AI With Vector Databases: A Benchmark - Part I](https://www.farfetchtechblog.com/en/blog/post/powering-ai-with-vector-databases-a-benchmark-part-i/)
+  - [FarFetch: Powering AI with Vector Databases: A Benchmark - Part 2](https://www.farfetchtechblog.com/en/blog/post/powering-ai-with-vector-databases-a-benchmark-part-ii/)
+  - [FarFetch: Multimodal Search and Browsing in the FARFETCH Product Catalogue - A primer for conversational search](https://www.farfetchtechblog.com/en/blog/post/multimodal-search-and-browsing-in-the-farfetch-product-catalogue-a-primer-for-conversational-search/)
+- [Spotify: Introducing Natural Language Search for Podcast Episodes](https://engineering.atspotify.com/2022/03/introducing-natural-language-search-for-podcast-episodes/)
+- [Vector Database Use Cases compiled by Qdrant](https://qdrant.tech/use-cases/)
+
+Vector indexing strategies 
+- Hierarchical Navigable Small Worlds (HNSW)
+  - [Malkov and Yashunin 2018](https://arxiv.org/abs/1603.09320)
+- Facebook AI Similarity Search (FAISS)
+  - [Meta AI Blog](https://ai.facebook.com/tools/faiss/)
+- Product quantization
+  - [PQ for Similarity Search by Peggy Chang](https://towardsdatascience.com/product-quantization-for-similarity-search-2f1f67c5fddd) 
+
+Cosine similarity and L2 Euclidean distance 
+- [Cosine and L2 are functionally the same when applied on normalized embeddings](https://stats.stackexchange.com/questions/146221/is-cosine-similarity-identical-to-l2-normalized-euclidean-distance)
+
+Filtering methods
+- [Filtering: The Missing WHERE Clause in Vector Search by Pinecone](https://www.pinecone.io/learn/vector-search-filtering/)
+
+Chunking strategies
+- [Chunking Strategies for LLM applications by Pinecone](https://www.pinecone.io/learn/chunking-strategies/)
+- [Semantic Search with Multi-Vector Indexing by Vespa](https://blog.vespa.ai/semantic-search-with-multi-vector-indexing/) 
+
+Other general reading
+- [Vector Library vs Vector Database by Weaviate](https://weaviate.io/blog/vector-library-vs-vector-database)
+- [Not All Vector Databases Are Made Equal by Dmitry Kan](https://towardsdatascience.com/milvus-pinecone-vespa-weaviate-vald-gsi-what-unites-these-buzz-words-and-what-makes-each-9c65a3bd0696)
+- [Open Source Vector Database Comparison by Zilliz](https://zilliz.com/comparison)
+- [Do you actually need a vector database? by Ethan Rosenthal](https://www.ethanrosenthal.com/2023/04/10/nn-vs-ann/)
