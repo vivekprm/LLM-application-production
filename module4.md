@@ -147,7 +147,7 @@ In this situation we're going to need to try and do it ourselves.
 
 Let's assume that we still have a good number of pre-made examples that show the article being summarized and transformed into a riddle and we also have our news API connections so that we can get as much inference data as we need.
 
-![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/fbbe49c7-ea8e-4ee4-b8ea-637f95f5c19f)
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/ee199c47-4a2f-4824-8386-02b02b661c6c)
 
 So when we come to building our own we have two options we can build our own base model foundation model from scratch which would include constructing the architecture for the base foundation model, we would need to gather a data set that encompasses a huge amount of training data sources and then we would fine-tune that model once
 that's been trained or we could take an existing model and fine-tune it on just the data set that we have available right now.
@@ -157,5 +157,13 @@ Almost never will we go down that first path of training a foundation model from
 But let's go down the fine tuning and existing model path as there's a lot of interesting nuances that we need to keep track of.
 
 ## Pros and cons of fine-tuning an existing LLM
-![Uploading image.png…]()
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/fbbe49c7-ea8e-4ee4-b8ea-637f95f5c19f)
 
+## Riddle me this: fine-tuning version
+The way of fine-tuning instruction following models has really come into its own in the last few months as we've seen some really fantastic results from Stanford University and others working on projects like [Alpaca](https://crfm.stanford.edu/2023/03/13/alpaca.html) and [Dolly V1](https://www.databricks.com/blog/2023/03/24/hello-dolly-democratizing-magic-chatgpt-open-models.html).
+
+Depending on the amount and quality of data we already have, we can do one of the following:
+- Self-instruct ([Alpaca](https://crfm.stanford.edu/2023/03/13/alpaca.html) and [Dolly v1](https://www.databricks.com/blog/2023/03/24/hello-dolly-democratizing-magic-chatgpt-open-models.html))
+  - Use another LLM to generate synthetic data samples for data augmentation.
+- High-quality fine-tune ([Dolly v2](https://www.databricks.com/blog/2023/04/12/dolly-first-open-commercially-viable-instruction-tuned-llm))
+  - Go straight to fine tuning, if data size and quality is satisfactory.
