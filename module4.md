@@ -170,3 +170,41 @@ Depending on the amount and quality of data we already have, we can do one of th
 
 However these are somewhat held back as they used proprietary data sets or datasets at least that had commercially restrictive licenses.
 In the last few weeks a new version of Dolly, Dolly V2 was released by Databricks using an open source data set.
+
+# Dolly
+Let's talk about Dolly, one of the innovations of 2023 that really opened up a new paradigm in large language modeling.
+
+Dolly is a 12 billion parameter model based on the Eleutha AI pythia 12 billion parameter model. Dolly is an instruction-following large language model which means that we can ask it to do specific tasks and it responds in the way that it was trained.
+
+Dolly is special in that it represents an approach that has been neglected or at least not investigated fully by the open source community. However we've seen now a huge momentum shift into this kind of direction in the early months of 2023.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/fc640c71-1368-465e-948c-4890c9102327)
+
+Dolly was built by first taking an open sourced pre-trained foundation model, the pythia 12 billion parameter model which was trained on [The Pile](https://pile.eleuther.ai/) a data set comprised of a number of different open source data sets.
+
+And then for Dolly we fine-tune the model on these [databricks-dolly-15K](https://huggingface.co/datasets/databricks/databricks-dolly-15k) data set. This data set is probably the real core of what makes Dolly special.
+
+The eleutherAI 12 billion parameter model is an open source model that we can use however we wish however, it's not fine-tuned in any particular way. If we do want to fine tune it we need a data set of high quality that we can use so that it elicits responses that's useful for us.
+
+The databricks-dolly-15K dataset was produced by the employees of Databricks and contains within it pairs of instructions and responses of high quality intellectual tasks. The special source behind Dolly is the fact that this databricks-dolly-15K dataset was released by the Databricks owners to be completely open and commercially usable.
+This is different from all of the other attempts prior to this as they had some kind of licensing issue. Dolly itself is not a state-of-the-art model, it's just an approach that shows that you can take a model such as the eleuutherAI open source model combine it with a high quality but open source data set and produce something
+that is commercially viable.
+
+Many new approaches are now taking place to combine this dolly 15K data set with even newer open source architectures. 
+
+## Where did Dolly come from?
+The idea for Dolly came from the [Stanford Alpaca project](https://crfm.stanford.edu/2023/03/13/alpaca.html). In this project they used 175 instructions that they created themselves and gave this to the OpenAI model text-davinci-003 to create synthetic and new versions of these tasks.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/89fd2fbb-9f9c-4eeb-afb8-6fd59c5132dd)
+
+After going through a process of trial and error they ended up with about 52000 high quality, instruction following examples. They combined this with meta's Llama 7 billion parameter model which was released not long ago with a high quality this high quality data set meant that they produced a very capable model.
+
+However this model was restricted with the licensing involved both with the Llama 7 billion parameter model and with the fact that they were using OpenAI to produce more training data. This held back the Stanford Alpaca model from being used in the commercial setting.
+
+This gave a hint though that we could actually use small models with high quality data sets to replicate the kinds of performance we're seeing from these larger models.
+
+**Moving forward now Sam Altman the CEO of OpenAI expressed his sense that we're at the end of this error of chasing larger and larger large language models the focus for 2023 and beyond seems to be now the age of small llms and applying them in different use cases.**
+
+We've moved from this broad approach where we try to build a master of everything and now trying to create it so that we have fine-tuned bespoke models for different types of tasks. Where this will go we're not sure but it's exciting to see where this field keeps evolving and moving into.
+
+# Evaluating LLMs
