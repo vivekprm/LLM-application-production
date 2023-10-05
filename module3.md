@@ -179,3 +179,19 @@ In the early months of 2023, a new product or a new [repo](https://github.com/Si
 
 These multi-stage reasoning tools therefore, are starting to form a bit of a landscape we have differences in products based on whether they're proprietary or open source and whether or not they're guided like the structured building blocks we have for LangChain and Hugging Face transformers and then some of the unguided ones like
 the [HuggingGPT](https://huggingface.co/spaces/microsoft/HuggingGPT) or the [babyAGI](https://github.com/yoheinakajima/babyagi) and [AutoGPT](https://github.com/Significant-Gravitas/Auto-GPT) projects that are currently being worked on by the open source community.
+
+# Module 3 Resources
+LLM Chains
+- [LangChain](https://docs.langchain.com/)
+- [OpenAI ChatGPT Plugins](https://platform.openai.com/docs/plugins/introduction)
+
+LLM Agents
+- [Transformers Agents](https://huggingface.co/docs/transformers/transformers_agents)
+- [AutoGPT](https://github.com/Significant-Gravitas/Auto-GPT)
+- [Baby AGI](https://github.com/yoheinakajima/babyagi)
+- [Dust.tt](https://dust.tt/)
+
+Multi-stage Reasoning in LLMs
+- [CoT Paradigms](https://matt-rickard.com/chain-of-thought-in-llms)
+- [ReAct Paper](https://react-lm.github.io/)
+- [Demonstrate-Search-Predict Framework](https://github.com/stanfordnlp/dsp)
