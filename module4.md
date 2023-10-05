@@ -167,3 +167,6 @@ Depending on the amount and quality of data we already have, we can do one of th
   - Use another LLM to generate synthetic data samples for data augmentation.
 - High-quality fine-tune ([Dolly v2](https://www.databricks.com/blog/2023/04/12/dolly-first-open-commercially-viable-instruction-tuned-llm))
   - Go straight to fine tuning, if data size and quality is satisfactory.
+
+However these are somewhat held back as they used proprietary data sets or datasets at least that had commercially restrictive licenses.
+In the last few weeks a new version of Dolly, Dolly V2 was released by Databricks using an open source data set.
