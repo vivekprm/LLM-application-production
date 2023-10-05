@@ -107,3 +107,75 @@ So if we look at how we connect these two together, we end up with three differe
 we then have inside our workflow chain two smaller chains: the summary chain, which we saw previously connects the prompt and the article data to the large language model that we use for summarization.
 
 The sentiment chain connects the output of the summary chain as the input to the prompt for our sentiment analysis large language model and then the output of the sentiment chain becomes the output of the workflow chain for the sentiment of article 1.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/3977210e-3d8e-461a-a811-2ed035ac6417)
+
+Now there's quite a lot going on here but you can think about this just as two small capsules being linked together to create our workflow. We can do more than just connect one large language model to another large language model, we can create an endless amount of creativity by connecting large language models to say mathematical suites, to programming tools, to search libraries, to all kinds of things!
+
+Let's look at how we might build something like this, and how the thought process might be required so that we can take the natural language that we're analyzing and connect it to these programmatic interfaces.
+The first step would be to take the text or the question that we give it and really, return executable code if we're connecting to some kind of mathematical library.
+If we look at the code on the right here and look at box one what we're doing is we're taking the large language model output.
+
+So for example we might say take this problem and multiply this number by this number what the large language model will do if we ask it to perform this with some kind
+of mathematical library is it'll generate text and code within that text.
+It'll look for flags that it's been trained on to produce code in particular with particular starting and ending tokens.
+It'll then pass that code by looking for it. It'll pass that code into some kind of interpreter, the interpreter will interpret this just as regular code as if a human was writing it into the prompt for that particular terminal.
+
+It'll then return some result so it's multiplying say 5 by 10 it'll return 50. the llm will then take in that value combine that with the original question that we asked and then produce a natural language response saying that our input 5 times 10 is equal to 50. And so behind the scenes the large language model actually takes our input as a question converts it into some response that should contain some kind of code it gives that code to something that can interpret it, it takes the result of what that interpreter did and then it combines that with the input that we gave it so that produces a response that makes sense that flows in a natural language kind of way.
+
+So this while seeming quite complicated if we look at it step by step really shows the amount of power that we can have with these large language models. Now this is dependent of course on the large language model being trained well enough so that it can produce code snippets based on natural language input.
+Many of the large language models that you've heard of or that we'll look at in the class do include code in part of their training data and that is one of the reasons that the exploration and the explosion of interest in training data sets has grown so much over the last few years.
+
+We can go even further than just a simple python code interpreter we can actually if we have our large language model trained well enough or trained specifically enough we can use it as a central reasoning tool and give it different types of access to things like search engines, email clients, other large language models, the whole world really of the internet is open to what these large language models can do.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/1e01200a-9c29-4baf-8765-13eccd307bb6)
+
+As long as we phrase our input our prompts such that the response from the llm would contain code or snippets of code that would interact with some kind of API and it can receive back the results of that API call we can have our llm actually connect to almost anything programmatic that we have.
+
+We can do this in a structured way, we could even do this in a way that the llm decides for itself what tools it should use.
+
+## LLM Agents
+An llm agent uses a large language model as a centralized reasoning unit and attaches tools and other components so that we can ask it to solve some very complicated tasks almost automatically.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/b4d7e29f-bf14-4280-9153-5bc371025b25)
+
+An llm agent is built up of these reasoning loops that large language models have shown to be very adapted performing.
+
+A large language model can be given a task and we can ask it to provide a plan or a thought process of how it would complete this task.
+We can then utilize this step-by-step approach and force the llm to go through a thought action and observation loop.
+
+If we look at the code on the right here, we can see that we start by calling the llm and giving it some kind of natural language request.
+
+It can take that request look at the description of the tools that it has at its disposal and decide what to do next. It can then observe the result of performing that action with that particular tool and make the judgment as to whether or not it should stop and return with a completed task, or take another step and go through the process taking the results that it currently has and putting that into the input of the llm to the next step.
+
+It continues this process until either a maximum amount of iterations has been performed or until it sees some kind of stopping criteria. This makes llm agents a very powerful tool in solving very complicated problems.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/8bc5d558-5069-4fe7-be14-336bc8304a8f)
+
+To build an llm agent, we first need a task that it needs to solve we need an llm that's capable of performing good Chain of Thought reasoning, and we need a set of tools that can interface with our large language model. In the same way that we saw the mathematical tool used previously with our llm chains.
+
+The tool descriptions are useful because the llm will look at the request of the tasks that it has to perform it'll look at the description of the tool and it'll decide which one it should use and how it should interface with it.
+
+Because llms often have the ability to output code or API interaction code with their output we can then leverage this fact to interact with different types of numerical or computational components.
+
+Llm agents or llm plugins are just starting to be released to the public and developed by the open source community.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/160f7fb6-b93e-4ac4-8f56-6eec4a9e3260)
+
+LangChain was the first largely used open source application of llm agents but the rest of the community is quickly taking notice and producing similar types of products, Hugging Face just released their **transformers agents** a few weeks ago.
+
+Google at their I/O conference this year showed the integration of PaLM 2 with their workspace, and ChatGPT is slowly releasing the plugins feature to the public where we can connect different types of tools to the ChatGPT interface and have it complete really interesting and complex tasks for us.
+
+OpenAI acknowledged the fact that the open source community is moving in a very similar direction to the way it is and even reference LangChain in their documentation when they discussed plugins.
+
+### Automating plugins: self-directing agents 
+Now if we want to take this to an extreme level, we can actually give the llm more automative abilities and allow it to create copies of itself so that it can solve tasks even given just a small amount of prompting.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/289bc805-2ee0-480c-a3a2-fb95ca30aba3)
+
+In the early months of 2023, a new product or a new [repo](https://github.com/Significant-Gravitas/AutoGPT) rather was created under the name AutoGPT AutoGPT uses GPT-4 to create clones of itself and delegates tasks to these copies so that it can solve truly complicated and fascinating tasks with just a natural language prompt.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/5da389f6-4298-42de-84b1-2b7e52b555cf)
+
+These multi-stage reasoning tools therefore, are starting to form a bit of a landscape we have differences in products based on whether they're proprietary or open source and whether or not they're guided like the structured building blocks we have for LangChain and Hugging Face transformers and then some of the unguided ones like
+the [HuggingGPT](https://huggingface.co/spaces/microsoft/HuggingGPT) or the [babyAGI](https://github.com/yoheinakajima/babyagi) and [AutoGPT](https://github.com/Significant-Gravitas/Auto-GPT) projects that are currently being worked on by the open source community.
