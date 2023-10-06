@@ -153,3 +153,53 @@ The second metric over here is **question-answering-based**. It means that we ca
 The third metric over here is **faithfulness**. It asks the question "does the output actually contain any unsupported information?"
 
 The last one over here is **language-model-based**, which means that we are using a language model to help us calculate the ratio of hallucinating tokens to the total number of target token. So as you can see over here, there are a variety of metrics to help us evaluate hallucination, but none of them is perfect. 
+
+# Mitigate hallucination from data and model
+Since hallucination stems from both data and model, it is only appropriate that we address them from both data and model perspectives as well. 
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/f6145d7c-038c-42d1-a563-a765f0e22cb0)
+
+So the first is to build a faithful data set. What this looks like is involving humans to write clean and faithful targets from scratch, given the source text. We may also want to rewrite the real sentences on the web and then it also involves having humans to actually filter out any non-factual data or make corrections to the current data.
+We may also want to look into augmenting the input data sources with more sources.
+
+The second angle is about doing more architectural research and experimentation to improve the current modeling and inference methods. Maybe this involves using more reinforcement learning and maybe this also involves using more multi-task learning. Because hallucination stems from the reliance on a single data set, we can also do more post-processing corrections as well and that will involve human in the loop.
+
+## How to reduce risks and limitations?
+But how do we reduce risks and limitations, in general, for all large language models? So we talked about data bias. 
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/82f473bb-1913-4522-86b5-08e40726a62f)
+
+We talked about toxic models. We talked about information hazard and also malicious users. So all of this we have to combat them using a united front. For data bias,
+we want to look at the data slices and maybe even update our data more frequently, but for to any toxic models, this will require approaches from multiple angles. 
+
+First of all, it has to do with assessing the data as well, but we can also incorporate some post-processing tools as well from Hugging Face and Spark NLP. And in fact, these are two tools I will look at in the code later on. 
+
+Or even implementing some guard rails around these large language models such as using **NeMo Guardrails**. And it can also involve curating more data for fine-tuning as well. For misinformation hazard or information hazard, we want to look at the source, where the information actually comes from. So that can include curating data for fine-tuning or fine-tuning your own model. 
+
+For malicious users, to catch these bad actors or malicious actors, there has to be some type of regulation. 
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/83bce974-b3e3-4a34-a92b-624ce5135566)
+
+But chances are a lot of these risks and limitations that we see with the large language models do need some type of regulation to help us govern the usage.
+
+## Three-layered audit
+We can think about regulation from a three-layered standpoint. So this paper in 2023 proposes that we can audit on three separate layers. 
+
+- First is governance, which refers to the fact that we should audit technology providers. This means all the big companies that are providing us the models to use.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/0e4fb767-abb1-4824-afd4-a090c2215c17)
+
+- The second audit can come in the form of models, which means that we audit a model prior to any release to the public. 
+- The third audit has to do with the application level, which means that
+
+We are assessing the risk of these models based on how users are actually using them. But even with this framework, there are still some open questions for us as a community to answer: how do we actually capture the entire landscape, where we cannot be totally sure **how users are interacting with these models**? And **how do we actually audit close-sourced models**? But thankfully, there are a lot of discussions in the works recently by different countries globally.
+
+## Who should audit LLMs?
+Perhaps the biggest question of all is, even with the auditing framework in place, who should actually be the one doing these audits? And any auditing is really only as good as the institution delivering it. 
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/40a5f4df-1a89-469a-877b-a99cf1dbfe41)
+
+We also have to recognize that all large language models cannot have zero risk so we will have to come up with arbitrary thresholds of what is our acceptance level.
+But how do we capture deliberate misuse? And how do we actually address gray areas, like when we are using large language models to generate creative products?
+
+So these are the types of questions that we, as a society, would need to wrestle with, as we advance more and more in large language model inventions and technology.
