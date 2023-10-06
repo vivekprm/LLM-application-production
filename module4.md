@@ -273,3 +273,23 @@ Finally some of the more cutting edge evaluation metrics focus on things like al
 
 Does it give a hallucination which we'll look more at in the next module and is it harmless? Is there a measure of toxicity or profanity in the response that we might
 want to reduce depending on the particular use case. Different evaluation metrics are used by researchers and even more becoming produced day by day the problem of alignment though is still a very critical component in modern llm research.
+
+# Module 4 Resources
+Fine-tuned models
+- [HF leaderboard ](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)
+- [MPT-7B](https://www.mosaicml.com/blog/mpt-7b)
+- [Stanford Alpaca](https://crfm.stanford.edu/2023/03/13/alpaca.html)
+- [Vicuna](https://lmsys.org/blog/2023-03-30-vicuna/)
+- [DeepSpeed on Databricks](https://www.databricks.com/blog/2023/03/20/fine-tuning-large-language-models-hugging-face-and-deepspeed.html)
+
+Databricks’ Dolly
+- [Dolly v1 blog](https://www.databricks.com/blog/2023/03/24/hello-dolly-democratizing-magic-chatgpt-open-models.html)
+- [Dolly v2 blog](https://www.databricks.com/blog/2023/04/12/dolly-first-open-commercially-viable-instruction-tuned-llm)
+- [Dolly on Hugging Face](https://huggingface.co/databricks/dolly-v2-12b)
+- [Build your own Dolly](https://www.databricks.com/resources/webinar/build-your-own-large-language-model-dolly)
+
+Evaluation and Alignment in LLMs
+- [HONEST](https://huggingface.co/spaces/evaluate-measurement/honest)
+- [LangChain Evaluate](https://docs.langchain.com/docs/use-cases/evaluation)
+- [OpenAI’s post on InstructGPT and Alignment](https://openai.com/research/instruction-following)
+- [Anthropic AI Alignment Papers](https://www.anthropic.com/index?subjects=alignment)
