@@ -203,3 +203,24 @@ We also have to recognize that all large language models cannot have zero risk s
 But how do we capture deliberate misuse? And how do we actually address gray areas, like when we are using large language models to generate creative products?
 
 So these are the types of questions that we, as a society, would need to wrestle with, as we advance more and more in large language model inventions and technology.
+
+# Module 5 Resources
+Social Risks and Benefits of LLMs
+- [Weidinger et al 2021 (DeepMind)](https://arxiv.org/pdf/2112.04359.pdf)
+- [Bender et al 2021](https://dl.acm.org/doi/10.1145/3442188.3445922)
+- [Mokander et al 2023](https://link.springer.com/article/10.1007/s43681-023-00289-2)
+- [Rillig et al 2023](https://pubs.acs.org/doi/pdf/10.1021/acs.est.3c01106)
+- [Pan et al 2023](https://arxiv.org/pdf/2305.13661.pdf)
+
+Hallucination
+- [Ji et al 2022](https://arxiv.org/pdf/2202.03629.pdf)
+
+Bias evaluation metrics and tools
+- [NeMo Guardrails](https://github.com/NVIDIA/NeMo-Guardrails)
+- [Guardrails.ai](https://shreyar.github.io/guardrails/)
+- [Liang et al 2022](https://arxiv.org/pdf/2211.09110.pdf)
+
+Other general reading
+- [All the Hard Stuff Nobody Talks About when Building Products with LLMs by Honeycomb](https://www.honeycomb.io/blog/hard-stuff-nobody-talks-about-llm)
+- [Science in the age of large language models by Nature Reviews Physics](https://www.nature.com/articles/s42254-023-00581-4)
+- [Language models might be able to self-correct biases — if you ask them by MIT Technology Review](https://www.technologyreview.com/2023/03/20/1070067/language-models-may-be-able-to-self-correct-biases-if-you-ask-them-to/)
