@@ -208,3 +208,68 @@ This gave a hint though that we could actually use small models with high qualit
 We've moved from this broad approach where we try to build a master of everything and now trying to create it so that we have fine-tuned bespoke models for different types of tasks. Where this will go we're not sure but it's exciting to see where this field keeps evolving and moving into.
 
 # Evaluating LLMs
+If we decide to fine-tune our model we really need to understand how to evaluate the model for its performance. Intuitively understanding how well a large language model performs is really quite difficult to verbalize or to come up with a consistent definition.
+
+## Training Loss/Validation Scores
+Whilst retraining of course we do look at things like the loss or the validation scores as we go through the training process as these are still deep learning models and they try to optimize some sort of loss function.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/3b754b90-3d6d-4061-82ad-ceb15ce061db)
+
+But for a good large language model what does the loss really tell us? Nothing really, not really any of the traditional metrics you would see for some kind of binary classifier. If you remember what a large language model does, it's really just producing a probability distribution over the entire vocabulary of tokens and selecting which one it thinks is the right answer.
+
+How that really relates to whether or not we're getting a good conversational agent or picking a good riddle for our summaries it's hard to see how those are connected.
+
+## Perplexity
+One way that we can improve on just whether or not I got the right answer is looking at its perplexity.
+
+Perplexity is really just how the spread of the probability distribution is over the tokens that its trying to predict. If we have a very sharp probability distribution of our tokens that means it has a very low perplexity and it knows then it's very confident that is the token it should be picking. Whether or not that token is correct or not depends on the accuracy so really what **a good language model will have is high accuracy and very low perplexity**. 
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/ecac983d-08ea-4962-b2e6-aa1cce5f36d9)
+
+It'll know which word should come next and it'll be correct in picking that word. 
+
+## More than perplexity
+Perplexity though is really not the end of the story either, even though we're confident and correct about picking the next word that doesn't necessarily mean that we're getting a good quality of the result they're getting we don't have any context for the rest of the words that is picking in that sentence if it's choosing the same word again and again maybe that has a high value of accuracy and a high value or a low value of perplexity but if we're doing say translation or summarization that's probably going to be complete nonsense.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/14266b25-fdab-40d8-9ffd-a88a33bc1486)
+
+So what we need to look at is task specific evaluation metrics.
+
+## Task-specific Evaluations
+### BLEU for translation
+For translation we can use the BLEU metric which evaluates how well our output compares to reference samples of the translations that we want to produce.
+In BLEU we calculate how many unigrams, those are single words, appear in the output compared to our reference. We also look at how the bigrams, trigrams and quadgrams appear in the output from our model compared to our reference samples.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/c8ec0de8-68c3-4a0a-a20b-987e736ab95a)
+
+BLEU then combines all of these and creates the geometric mean of the uni,bi tri, and quad grams and gives the total value for the BLEU metric.
+
+A unigram in this situation is a single word so if a word appears, say, six times and it's the exact same word it will actually have a very high value for the unigram score in BLEU. However when we extend this to the bigram and trigram case we'll see that the values quickly drop off to zero. If we have a very good translation we'll see that it matches very well the references and so we'll get a high value for the BLEU score.
+
+### ROUGE for summarization
+Likewise for summarizations we can look at the ROUGE score.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/9a2bf7d5-fed8-4bd3-b21d-2cefdd905bd0)
+
+ROUGE is quite similar to BLEU in how it matches the reference samples to the outputs given by the summarization model.
+
+In this situation however it also takes into account the length of the summary so that we have as short as summary as possible. If we have quite a verbose summarization but it still contains many of the words in our reference sample that does so-so but not fantastically.
+
+ROUGE then looks for situations where both words are common in both the sample and the output but also that the output is as small as possible relative to the
+reference samples. 
+
+### Benchmarks on datasets: SQuAD - Stanford Question Answering Dataset - reading comprehension
+But what if we want to do something where we're not using just our data. What if we want to benchmark our model compared to other models. We might not have the same datasets that they have and so that's why the community has also produced benchmark datasets so that we can evaluate our models and compare that to
+the others in the community.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/0c54aae3-847a-45b3-b8cd-d007af0a5afa)
+
+**SQuAD the Stanford Question and Answering dataset** is a very commonly used toolkit which contains a number of different data sets that we can use for our models to compare different llms as they've been fine-tuned.
+
+### Evaluation metrics at the cutting edge
+Finally some of the more cutting edge evaluation metrics focus on things like alignment. And that's how well if we give say an instruction following llm a particular task does it give us one: a relevant result based on the input that we asked it.
+
+![image](https://github.com/vivekprm/LLM-application-production/assets/2403660/d6cdeefd-de54-4920-b0fa-f36437986ecb)
+
+Does it give a hallucination which we'll look more at in the next module and is it harmless? Is there a measure of toxicity or profanity in the response that we might
+want to reduce depending on the particular use case. Different evaluation metrics are used by researchers and even more becoming produced day by day the problem of alignment though is still a very critical component in modern llm research.
