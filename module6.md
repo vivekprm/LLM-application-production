@@ -62,3 +62,27 @@ When a new model is produced, it is put into that model registry at the top laye
 
 Speaking of moving them towards production, that's what the Continuous Deployment or CD pipeline does. It puts those through either incremental rollout or stages of tests and eventually marks them ready for production, at which point they can be loaded into inference and serving systems on the right and also monitored.
 
+# Module 6 Resources
+**General MLOps**
+- [“The Big Book of MLOps”](https://www.databricks.com/resources/ebook/the-big-book-of-mlops) (eBook overviewing MLOps)
+  - Blog post (short) version: [“Architecting MLOps on the Lakehouse”](https://www.databricks.com/blog/2022/06/22/architecting-mlops-on-the-lakehouse.html)
+  - MLOps in the context of Databricks documentation ([AWS](https://docs.databricks.com/machine-learning/mlops/mlops-workflow.html), [Azure](https://learn.microsoft.com/en-us/azure/databricks/machine-learning/mlops/mlops-workflow), [GCP](https://docs.gcp.databricks.com/machine-learning/mlops/mlops-workflow.html))
+
+**LLMOps**
+- Blog post: Chip Huyen on [“Building LLM applications for production”](https://huyenchip.com/2023/04/11/llm-engineering.html)
+
+**[MLflow](https://mlflow.org/)**
+- [Documentation](https://mlflow.org/docs/latest/index.html)
+  - [Quickstart](https://mlflow.org/docs/latest/quickstart.html)
+  - [Tutorials and examples](https://mlflow.org/docs/latest/tutorials-and-examples/index.html)
+  - Overview in Databricks ([AWS](https://docs.databricks.com/mlflow/index.html), [Azure](https://learn.microsoft.com/en-us/azure/databricks/mlflow/), [GCP](https://docs.gcp.databricks.com/mlflow/index.html))
+
+**[Apache Spark](https://spark.apache.org/)**
+- [Documentation](https://spark.apache.org/docs/latest/index.html)
+  - [Quickstart](https://spark.apache.org/docs/latest/quick-start.html)
+- Overview in Databricks ([AWS](https://docs.databricks.com/spark/index.html), [Azure](https://learn.microsoft.com/en-us/azure/databricks/spark/), [GCP](https://docs.gcp.databricks.com/spark/index.html))
+
+**[Delta Lake](https://delta.io/)**
+- [Documentation](https://docs.delta.io/latest/index.html)
+- Overview in Databricks ([AWS](https://docs.databricks.com/delta/index.html), [Azure](https://learn.microsoft.com/en-us/azure/databricks/delta/), [GCP](https://docs.gcp.databricks.com/delta/index.html))
+- [Lakehouse Architecture (CIDR paper)](https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf)
