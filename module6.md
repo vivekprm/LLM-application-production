@@ -81,6 +81,7 @@ Speaking of moving them towards production, that's what the Continuous Deploymen
 - [Documentation](https://spark.apache.org/docs/latest/index.html)
   - [Quickstart](https://spark.apache.org/docs/latest/quick-start.html)
 - Overview in Databricks ([AWS](https://docs.databricks.com/spark/index.html), [Azure](https://learn.microsoft.com/en-us/azure/databricks/spark/), [GCP](https://docs.gcp.databricks.com/spark/index.html))
+- [Setup Apache Spark with Delta Lake](https://docs.delta.io/latest/quick-start.html#set-up-apache-spark-with-delta-lake)
 
 **[Delta Lake](https://delta.io/)**
 - [Documentation](https://docs.delta.io/latest/index.html)
