@@ -87,3 +87,4 @@ Speaking of moving them towards production, that's what the Continuous Deploymen
 - [Documentation](https://docs.delta.io/latest/index.html)
 - Overview in Databricks ([AWS](https://docs.databricks.com/delta/index.html), [Azure](https://learn.microsoft.com/en-us/azure/databricks/delta/), [GCP](https://docs.gcp.databricks.com/delta/index.html))
 - [Lakehouse Architecture (CIDR paper)](https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf)
+- [Deltalake docker](https://github.com/delta-io/delta-docs/tree/main/static/quickstart_docker)
