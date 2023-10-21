@@ -202,6 +202,7 @@ In the context of LLMs, whether or not you need a vector store, you know, whethe
 ## How to improve retrieval performance?
 How do you improve retrieval performance then, to allow users to get better responses?
 At a very high level, there are two different strategies. One is regarding your embedding model selection and the second has to do with how you store your documents. Let's start with embeddings.
+
 Tip one: you should absolutely choose your embedding model wisely. A proxy question that you can ask yourself is: is your embedding model currently trained on similar data as yours? If the answer is yes, then good news, you can keep using the embedding model.
 
 - Embedding model selection
