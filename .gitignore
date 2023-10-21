@@ -1,1 +1,5 @@
 notebooks/**/.ipynb_checkpoints
+datasets
+user_db
+xc_db
+notebooks/LLM02-EmbeddingsVectorDatabasesAndSearch/xcchati5.ipynb
